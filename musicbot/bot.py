@@ -1655,7 +1655,7 @@ class MusicBot(discord.Client):
                 player.surpriseplaylist = list(self.surpriseplaylist)
 
         random.shuffle(player.surpriseplaylist)
-        song_url = random.choice(player.autoplaylist)
+        song_url = random.choice(player.surpriseplaylist)
         return await self.cmd_play(
             message,
             player,
