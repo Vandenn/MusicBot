@@ -1644,11 +1644,21 @@ class MusicBot(discord.Client):
 
         Adds a song from your surprise playlist to the queue.
         """
-        random.shuffle(_player.surpriseplaylist)
-        song_url = random.choice(_player.autoplaylist)
+        player = _player
+        if not player.surpriseplaylist:
+            if not self.surpriseplaylist:
+                log.warning("No playable songs in the surprise playlist.")
+            else:
+                log.debug(
+                    "No content in current surprise playlist. Filling with new music..."
+                )
+                player.surpriseplaylist = list(self.surpriseplaylist)
+
+        random.shuffle(player.surpriseplaylist)
+        song_url = random.choice(player.autoplaylist)
         return await self.cmd_play(
             message,
-            _player,
+            player,
             channel,
             author,
             permissions,
