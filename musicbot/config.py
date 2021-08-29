@@ -191,6 +191,9 @@ class Config:
         self.auto_playlist_file = config.get(
             "Files", "AutoPlaylistFile", fallback=ConfigDefaults.auto_playlist_file
         )
+        self.surprise_playlist_file = config.get(
+            "Files", "SurprisePlaylistFile", fallback=ConfigDefaults.surprise_playlist_file
+        )
         self.i18n_file = config.get(
             "Files", "i18nFile", fallback=ConfigDefaults.i18n_file
         )
@@ -518,6 +521,7 @@ class ConfigDefaults:
     auto_playlist_file = (
         "config/autoplaylist.txt"  # this will change when I add playlists
     )
+    surprise_playlist_file = "config/surpriseplaylist.txt"
     i18n_file = "config/i18n/en.json"
 
 

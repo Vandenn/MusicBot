@@ -98,6 +98,7 @@ class MusicBot(discord.Client):
 
         self.blacklist = set(load_file(self.config.blacklist_file))
         self.autoplaylist = load_file(self.config.auto_playlist_file)
+        self.surpriseplaylist = load_file(self.config.surprise_playlist_file)
 
         self.aiolocks = defaultdict(asyncio.Lock)
         self.downloader = downloader.Downloader(download_folder="audio_cache")
@@ -1635,6 +1636,26 @@ class MusicBot(discord.Client):
                 expire_in=30,
             )
         return True
+
+    async def cmd_surprise(self, message, _player, channel, author, permissions, leftover_args):
+        """
+        Usage:
+            {command_prefix}surprise
+
+        Adds a song from your surprise playlist to the queue.
+        """
+        random.shuffle(_player.surpriseplaylist)
+        song_url = random.choice(_player.autoplaylist)
+        return await self.cmd_play(
+            message,
+            _player,
+            channel,
+            author,
+            permissions,
+            leftover_args,
+            song_url
+        )
+
 
     async def cmd_play(
         self, message, _player, channel, author, permissions, leftover_args, song_url
